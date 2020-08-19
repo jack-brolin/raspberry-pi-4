@@ -25,8 +25,26 @@ while True:
                     session.trust_env = False
 
                     response = session.get(url=url)
+                    response_message = str(response.content)
 
-                    logging.warning(url)
-                    logging.warning(str(response.status_code))
-                    logging.warning(str(response.content))
+                    if "ERROR" in response_message:
+                        logging.warning(url)
+                        logging.warning(response_message)
+                    elif registry.MessageSenderRegistry.is_repeating:
+                        MessageSenderRegistry.update_table(
+                            {
+                                "id": registry.MessageSenderRegistry.id,
+                                "sending_time": datetime.datetime.now() + datetime.timedelta(
+                                    minutes=registry.MessageSenderRegistry.repeating_interval
+                                )
+                            }
+                        )
+                    else:
+                        MessageSenderRegistry.update_table(
+                            {
+                                "id": registry.MessageSenderRegistry.id,
+                                "is_sent": False
+                            }
+                        )
+
     time.sleep(60)

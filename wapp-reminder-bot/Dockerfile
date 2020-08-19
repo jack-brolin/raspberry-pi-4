@@ -13,3 +13,5 @@ RUN pip install --upgrade pip
 WORKDIR /
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+ENV TZ=Europe/Belgrade
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
