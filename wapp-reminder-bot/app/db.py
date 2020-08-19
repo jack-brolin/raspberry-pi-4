@@ -46,7 +46,8 @@ class MessageSenderRegistry(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, ForeignKey('user.username', onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
-    message_id = Column(Integer, ForeignKey('message.message_id', onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
+    message_id = Column(Integer, ForeignKey('message.message_id', onupdate="CASCADE", ondelete="CASCADE"),
+                        primary_key=True)
     sending_time = Column(DateTime)
     is_sent = Column(Boolean)
     is_repeating = Column(Boolean)
@@ -54,7 +55,9 @@ class MessageSenderRegistry(Base):
 
     @staticmethod
     def get_registry_by_username(username):
-        return Session(engine).query(MessageSenderRegistry, Message).filter_by(username=username).all()
+        return Session(engine).query(MessageSenderRegistry, Message).filter(
+            MessageSenderRegistry.message_id == Message.message_id
+        ).filter_by(username=username).all()
 
     @staticmethod
     def update_table(data_to_update):
