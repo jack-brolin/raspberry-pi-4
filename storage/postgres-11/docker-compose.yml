@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  postgres:
+    restart: always
+    image: postgres:11
+    container_name: postgres-db
+    command: postgres -c 'shared_buffers=1024MB' -c 'max_connections=4000'
+    environment:
+      POSTGRES_USER: ${REMINDER_BOT_DB_USER}
+      POSTGRES_PASSWORD: ${REMINDER_BOT_DB_PASSWORD}
+      POSTGRES_DB: ${REMINDER_BOT_DATABASE}
+    volumes:
+      - ./create_db.sh:/docker-entrypoint-initdb.d/create_db.sh
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - reminder-bot-network
+    ports:
+      - 5432:5432
+volumes:
+  postgres-data:
+    driver: local
+networks:
+  reminder-bot-network:
+    external: true

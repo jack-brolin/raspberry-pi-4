@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  message-sender:
+    build:
+      context: ""
+    restart: always
+    container_name: message-sender
+    command: python /app/app.py
+    networks:
+      - reminder-bot-network
+    environment:
+      POSTGRES_HOST: ${REMINDER_BOT_DB_HOST}
+      POSTGRES_PORT: ${REMINDER_BOT_DB_PORT}
+      POSTGRES_USER: ${REMINDER_BOT_DB_USER}
+      POSTGRES_PASSWORD: ${REMINDER_BOT_DB_PASSWORD}
+      POSTGRES_DB: ${REMINDER_BOT_DATABASE}
+networks:
+  reminder-bot-network:
+    external: true
