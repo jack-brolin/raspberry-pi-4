@@ -58,9 +58,11 @@ class MessageSenderRegistry(Base):
 
     @staticmethod
     def update_table(data_to_update):
-        result = Session(engine).query(MessageSenderRegistry).filter_by(id=data_to_update["id"])
+        session = Session(engine)
+        result = session.query(MessageSenderRegistry).filter_by(id=data_to_update["id"])
 
         result.update(data_to_update)
+        session.commit()
 
 
 Base.metadata.create_all(engine)

@@ -43,7 +43,7 @@ while True:
                         MessageSenderRegistry.update_table(
                             {
                                 "id": registry.MessageSenderRegistry.id,
-                                "is_sent": False
+                                "is_sent": True
                             }
                         )
 
