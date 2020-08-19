@@ -8,6 +8,3 @@ Postgres 11 DB docker-compose.yml file
 
 ## wapp-reminder-bot
 Reminder app
-
-# Twilio
-pwd: micr@infinitum2201
